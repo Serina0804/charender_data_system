@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math"
 	"net/http"
+	"sort"
 
 	"github.com/gorilla/mux"
 )
@@ -22,8 +23,12 @@ type Schedule struct {
 	Event_data *ScheduleEntry
 }
 
+//type ScheduleList struct {
+//	Schedule *Schedule
+//}
+
 type ScheduleList struct {
-	Schedule *Schedule
+	Schedule []*Schedule
 }
 
 const start_time_digit = 2
@@ -75,7 +80,13 @@ func main() {
 
 	schedule_entry := NewScheduleEntry(day, event_name, start_time, end_time, memo, record)
 	schedule := NewSchedule(MakeId(day, start_time), schedule_entry)
-	schedule_list := new(ScheduleList)
+	schedule_list := &ScheduleList{}
 
-	schedule_list.append(schedule)
+	scheduleSlice := schedule_list.Schedule
+	scheduleSlice = append(scheduleSlice, schedule)
+
+	// スケジュールをソート
+	sort.SliceStable(scheduleSlice, func(i, j int) bool {
+		return scheduleSlice[i].Id < scheduleSlice[j].Id
+	})
 }
