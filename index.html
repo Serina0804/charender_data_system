@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>入力データ</title>
+    <title>Input form</title>
 </head>
 <body>
-<h1>入力データ</h1>
+<h1>Input data</h1>
 
 <!-- フォーム -->
-<form id="dataForm">
+<form id="dataForm" method="POST">
     <label for="date">date：</label>
     <input type="text" id="date" name="date"><br>
     <label for="day">day of the week：</label>
@@ -24,6 +24,7 @@
     <input type="text" id="record" name="record"><br>
     <button type="button" onclick="addData()">Add Data</button>
 </form>
+
 
 <!-- テーブル -->
 <table id="dataTable" border="1">
