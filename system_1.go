@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"html/template"
 	"math"
 	"net/http"
 	"sort"
@@ -22,10 +23,6 @@ type Schedule struct {
 	Id         int
 	Event_data *ScheduleEntry
 }
-
-//type ScheduleList struct {
-//	Schedule *Schedule
-//}
 
 type ScheduleList struct {
 	Schedule []*Schedule
@@ -57,15 +54,28 @@ func MakeId(day int, start_time int) int {
 	return id
 }
 
-func RegisterHandler(w http.ResponseWriter, r *http.Request) {
+func mainHandler(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("index.html"))
+
+	if r.Method == "POST" {
+		date := r.FormValue("date") // ex. 20240409
+		day := r.FormValue("day")   // mon, tue, wed, thr, fri
+		event_name := r.FormValue("event")
+		start_time := r.FormValue("start_time")
+		end_time := r.FormValue("end_time")
+		memo := r.FormValue("memo")
+		record := r.FormValue("record")
+
+		fmt.Printf("date: %s, day: %s, event_name: %s, start_time: %s, end_time: %s, memo: %s, record: %s\n", date, day, event_name, start_time, end_time, memo, record)
+	}
+
+	tmpl.Execute(w, nil)
 }
 
 func main() {
 	r := mux.NewRouter()
-	r.HandleFunc("/", RegisterHandler)
-
+	r.HandleFunc("/", mainHandler)
 	http.Handle("/", r)
-
 	fmt.Println("boot server")
 	http.ListenAndServe(":8080", nil)
 
