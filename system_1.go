@@ -8,12 +8,12 @@ import (
 )
 
 func loginHandler(w http.ResponseWriter, r *http.Request) {
-
 }
 
 func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/", loginHandler)
+
 	http.Handle("/", r)
 
 	fmt.Println("boot server")

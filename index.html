@@ -1,36 +1,65 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{.CourseName}}の時間割</title>
+    <title>入力データ</title>
 </head>
 <body>
-<h1>時間割</h1>
-<form action="/" method="post">
-    <label for="day">曜日:</label>
+<h1>入力データ</h1>
+
+<!-- フォーム -->
+<form id="dataForm">
+    <label for="date">date：</label>
+    <input type="text" id="date" name="date"><br>
+    <label for="day">day of the week：</label>
     <input type="text" id="day" name="day"><br>
-    <label for="period">何限か:</label>
-    <input type="text" id="period" name="period"><br>
-    <label for="course">授業名:</label>
-    <input type="text" id="course" name="course"><br>
-    <label for="teacher">先生:</label>
-    <input type="text" id="teacher" name="teacher"><br>
-    <button type="submit">反映</button>
+    <label for="event">event：</label>
+    <input type="text" id="event" name="event"><br>
+    <label for="start_time">start time：</label>
+    <input type="text" id="start_time" name="start_time"><br>
+    <label for="end_time">end time：</label>
+    <input type="text" id="end_time" name="end_time"><br>
+    <label for="memo">memo：</label>
+    <input type="text" id="memo" name="memo"><br>
+    <label for="record">record：</label>
+    <input type="text" id="record" name="record"><br>
+    <button type="button" onclick="addData()">Add Data</button>
 </form>
-<table border="1">
+
+<!-- テーブル -->
+<table id="dataTable" border="1">
+    <thead>
     <tr>
-        <th>曜日</th>
-        <th>何限か</th>
-        <th>授業名</th>
-        <th>先生</th>
+        <th>date</th>
+        <th>day of the week</th>
+        <th>event</th>
+        <th>start time</th>
+        <th>end time</th>
+        <th>memo</th>
+        <th>record</th>
     </tr>
-    {{range .}}
-    <tr>
-        <td>{{.Day}}</td>
-        <td>{{.Period}}</td>
-        <td><a href="/course?name={{.Course}}">{{.Course}}</a></td>
-        <td>{{.Teacher}}</td>
-    </tr>
-    {{end}}
+    </thead>
+    <tbody>
+    <!-- データはここに追加されます -->
+    </tbody>
 </table>
+
+<script>
+    function addData() {
+        // 入力されたデータを取得
+        var formData = new FormData(document.getElementById("dataForm"));
+
+        // 新しい行を作成してデータを追加
+        var newRow = document.createElement("tr");
+        formData.forEach(function(value, key) {
+            var cell = document.createElement("td");
+            cell.textContent = value;
+            newRow.appendChild(cell);
+        });
+
+        // テーブルに行を追加
+        document.getElementById("dataTable").getElementsByTagName("tbody")[0].appendChild(newRow);
+    }
+</script>
+
 </body>
 </html>
