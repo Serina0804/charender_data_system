@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -21,9 +22,11 @@ type Schedule struct {
 	Event_data *ScheduleEntry
 }
 
-struct ScheduleList {
+type ScheduleList struct {
 	Schedule *Schedule
 }
+
+const start_time_digit = 2
 
 // constructor and initializer of ScheduleEntry
 func NewScheduleEntry(day int, event_name string, start_time int, end_time int, memo string, record string) *ScheduleEntry {
@@ -37,8 +40,16 @@ func NewScheduleEntry(day int, event_name string, start_time int, end_time int, 
 	return s
 }
 
-func MakeId (day int, start_time int) {
-	// return 
+func NewSchedule(id int, schedule_entry *ScheduleEntry) *Schedule {
+	s := new(Schedule)
+	s.Id = id
+	s.Event_data = schedule_entry
+	return s
+}
+
+func MakeId(day int, start_time int) int {
+	id := day*int(math.Pow10(start_time_digit)) + start_time
+	return id
 }
 
 func RegisterHandler(w http.ResponseWriter, r *http.Request) {
@@ -52,8 +63,8 @@ func main() {
 
 	fmt.Println("boot server")
 	http.ListenAndServe(":8080", nil)
-	
-	schedule := new(Schedule)
+
+	// get usr input
 
 	day := 20240429
 	event_name := "dev"
@@ -62,6 +73,9 @@ func main() {
 	memo := "TODO"
 	record := ""
 
-	schedule_entry = NewScheduleEntry(day, event_name, start_time, end_time, memo, record)
-	// schedule = (schedule, )
+	schedule_entry := NewScheduleEntry(day, event_name, start_time, end_time, memo, record)
+	schedule := NewSchedule(MakeId(day, start_time), schedule_entry)
+	schedule_list := new(ScheduleList)
+
+	schedule_list.append(schedule)
 }
