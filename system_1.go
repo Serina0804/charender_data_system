@@ -7,12 +7,12 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func loginHandler(w http.ResponseWriter, r *http.Request) {
+func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
 	r := mux.NewRouter()
-	r.HandleFunc("/", loginHandler)
+	r.HandleFunc("/", RegisterHandler)
 
 	http.Handle("/", r)
 
