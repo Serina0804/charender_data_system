@@ -10,14 +10,27 @@ import (
 	"github.com/gorilla/mux"
 )
 
+const (
+	Monday = 1
+	Tuesday
+	Wednesday
+	Thursday
+	Friday
+	Saturday
+	Sunday
+)
+
 type ScheduleEntry struct {
-	Date       int
-	Day        string
-	Event_name string
-	Start_time int
-	End_time   int
-	Memo       string
-	Record     string
+	Month           int
+	Date            int
+	Day             int
+	Event_name      string
+	Start_time_hour int
+	Start_time_min  int
+	End_time_hour   int
+	End_time_min    int
+	Memo            string
+	Record          string
 }
 
 type Schedule struct {
@@ -25,16 +38,72 @@ type Schedule struct {
 	Event_data *ScheduleEntry
 }
 
+func dayOfWeek(day string) int {
+	switch day {
+	case "月":
+	case "Mon":
+	case "mon":
+		return Monday
+
+	case "火":
+	case "Tue":
+	case "tue":
+		return Tuesday
+
+	case "水":
+	case "Wed":
+	case "wed":
+		return Wednesday
+
+	case "木":
+	case "Thr":
+	case "thr":
+		return Thursday
+
+	case "金":
+	case "Fri":
+	case "fri":
+		return Friday
+
+	case "土":
+	case "Sat":
+	case "sat":
+		return Saturday
+
+	case "日":
+	case "sun":
+	case "Sun":
+		return Sunday
+
+	}
+	return -1
+}
+
 // constructor and initializer of ScheduleEntry
-func NewScheduleEntry(date int, day string, event_name string, start_time int, end_time int, memo string, record string) *ScheduleEntry {
+func NewScheduleEntry(month int, date int, day string, event_name string, start_time_hour int, start_time_min int, end_time_hour int, end_time_min int, memo string, record string) *ScheduleEntry {
 	s := new(ScheduleEntry)
+	s.Month = month
 	s.Date = date
-	s.Day = day
 	s.Event_name = event_name
-	s.Start_time = start_time
-	s.End_time = end_time
+	s.Start_time_hour = start_time_hour
+	s.Start_time_min = start_time_min
+	s.End_time_hour = end_time_hour
+	s.End_time_min = end_time_min
 	s.Memo = memo
 	s.Record = record
+
+	s.Day = dayOfWeek(day)
+	if s.Day == -1 {
+		fmt.Printf("day of the week is wrong\n")
+		fmt.Printf("	Monday.. 月/Mon/mon\n")
+		fmt.Printf("	Tuesday.. 火/Tue/tue\n")
+		fmt.Printf("	Wednesday.. 水/Wed/wed\n")
+		fmt.Printf("	Thursday.. 木/Thr/thr\n")
+		fmt.Printf("	Friday.. 金/Fri/fri\n")
+		fmt.Printf("	Saturday.. 土/Sat/sat\n")
+		fmt.Printf("	Sunday.. 日/Sun/sun\n")
+	}
+
 	return s
 }
 
