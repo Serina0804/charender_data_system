@@ -34,7 +34,7 @@ func MakeId(month int, str_date string, str_start_hour string, str_start_min str
 	return id
 }
 
-var scheduleList []*Schedule
+var scheduleList []Schedule
 
 func mainHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("index.html"))
@@ -79,7 +79,7 @@ func mainHandler(w http.ResponseWriter, r *http.Request) {
 			fmt.Printf("end_min must be number\n")
 		}
 
-		scheduleList = append(scheduleList, &Schedule{
+		scheduleList = append(scheduleList, Schedule{
 			Id:        MakeId(month, str_date, str_start_hour, str_start_min),
 			Month:     month,
 			Date:      date,
@@ -100,7 +100,6 @@ func mainHandler(w http.ResponseWriter, r *http.Request) {
 		// check sort
 		for i, v := range scheduleList {
 			fmt.Println(i, v)
-			// fmt.Printf("date: %s, day: %s, event_name: %s, start_time: %s, end_time: %s, memo: %s, record: %s\n", str_date, day, event_name, str_start_time, str_end_time, memo, record)
 		}
 	}
 
@@ -110,7 +109,7 @@ func mainHandler(w http.ResponseWriter, r *http.Request) {
 func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/", mainHandler)
-	// r.HandleFunc("/accept", acceptHandler)
+
 	http.Handle("/", r)
 	fmt.Println("boot server")
 	http.ListenAndServe(":8080", nil)
