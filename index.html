@@ -9,7 +9,7 @@
     <h1>input form</h1>
 
     <!-- フォーム -->
-    <form id="dataForm" action="accept.html" method="post">
+    <form id="dataForm" action="/" method="post">
         <label for="date">date: </label>
         <input type="text" id="date" name="date"><br>
         <label for="day">day of the week: </label>
@@ -24,10 +24,7 @@
         <input type="text" id="memo" name="memo"><br>
         <label for="record">record: </label>
         <input type="text" id="record" name="record"><br>
-        <button type="button" onclick="addData()">Add Data</button> <!-- typeをbuttonに変更 -->
-<!--        <button type="button" onclick="addData()">Add Data</button> &lt;!&ndash; typeをbuttonに変更 &ndash;&gt;-->
-<!--        <button type="submit" onclick="addData()">Add Data</button>-->
-<!--        <button type="submit">Add Data</button> &lt;!&ndash; onclick属性は削除 &ndash;&gt;-->
+        <button type="submit">Add Data</button>
     </form>
 
     <!-- テーブル -->
@@ -44,72 +41,19 @@
             </tr>
         </thead>
         <tbody>
-            <!-- データはここに追加されます -->
+            {{ range . }}
+            <tr>
+                <td>{{ .Date }}</td>
+                <td>{{ .Day }}</td>
+                <td>{{ .EventName}}</td>
+                <td>{{ .StartTime }}</td>
+                <td>{{ .EndTime }}</td>
+                <td>{{ .Memo }}</td>
+                <td>{{ .Record }}</td>
+            </tr>
+            {{ end }}
         </tbody>
     </table>
-
-    <script>
-        // function addData() {
-        //     // 入力されたデータを取得
-        //     var formData = new FormData(document.getElementById("dataForm"));
-        //
-        //     // 新しい行を作成してデータを追加
-        //     var newRow = document.createElement("tr");
-        //     formData.forEach(function (value, key) {
-        //         var cell = document.createElement("td");
-        //         cell.textContent = value;
-        //         newRow.appendChild(cell);
-        //     });
-        //
-        //     // テーブルに行を追加
-        //     document.getElementById("dataTable").getElementsByTagName("tbody")[0].appendChild(newRow);
-        //     // 追加された表を表示する
-        //     document.getElementById("dataTable").style.display = "table";
-        // }
-        function addData() {
-
-            // 入力されたデータを取得
-            var formData = new FormData(document.getElementById("dataForm"));
-
-            // 新しい行を作成してデータを追加
-            var newRow = document.createElement("tr");
-            formData.forEach(function (value, key) {
-                var cell = document.createElement("td");
-                cell.textContent = value;
-                newRow.appendChild(cell);
-            });
-
-            // テーブルに行を追加
-            document.getElementById("dataTable").getElementsByTagName("tbody")[0].appendChild(newRow);
-            // 追加された表を表示する
-            document.getElementById("dataTable").style.display = "table";
-
-            // // フォームの送信を行う
-            // document.getElementById("dataForm").submit();
-            // accept.htmlにリダイレクト
-            window.location.href = "accept.html";
-        }
-        // document.getElementById("dataForm").addEventListener("submit", function (event) {
-        //     event.preventDefault(); // フォームの送信をキャンセル
-        //
-        //     // 入力されたデータを取得
-        //     var formData = new FormData(document.getElementById("dataForm"));
-        //
-        //     // 新しい行を作成してデータを追加
-        //     var newRow = document.createElement("tr");
-        //     formData.forEach(function (value, key) {
-        //         var cell = document.createElement("td");
-        //         cell.textContent = value;
-        //         newRow.appendChild(cell);
-        //     });
-        //
-        //     // テーブルに行を追加
-        //     document.getElementById("dataTable").getElementsByTagName("tbody")[0].appendChild(newRow);
-        //
-        //     // 追加された表を表示する
-        //     document.getElementById("dataTable").style.display = "table";
-        // });
-    </script>
 
 </body>
 
