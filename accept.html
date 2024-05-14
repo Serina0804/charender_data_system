@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>入力確認</title>
+</head>
+
+<body>
+    <h1>
+        以下の入力を受け付けました。
+    </h1>
+
+    <!-- フォーム -->
+    <form id="accept form" action="/static" method="post" onsubmit="return false;">
+        <button onclick="window.location.href='index.html'">入力画面に戻る</button>
+    </form>
+    <form id="display form" action="/static" method="post" onsubmit="return false;">
+        <button type="submit" onclick="displayInput()">入力データを表示する</button>
+    </form>
+    <script>
+        function returnToInput() {
+            // ページのリダイレクトを行う
+            window.location.href = "index.html";
+        }
+        function displayInput() {
+            window.location.href = "display.html"
+        }
+    </script>
+
+</body>
+
+</html>
