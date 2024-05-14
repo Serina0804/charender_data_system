@@ -104,10 +104,15 @@ func mainHandler(w http.ResponseWriter, r *http.Request) {
 
 	tmpl.Execute(w, nil)
 }
+func acceptHandler(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("accept.html"))
+	tmpl.Execute(w, nil)
+}
 
 func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/", mainHandler)
+	r.HandleFunc("/accept", acceptHandler)
 	http.Handle("/", r)
 	fmt.Println("boot server")
 	http.ListenAndServe(":8080", nil)
