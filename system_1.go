@@ -12,17 +12,20 @@ import (
 
 type Schedule struct {
 	Id        int
+	Month     int
 	Date      int
 	Day       string
 	EventName string
-	StartTime int
-	EndTime   int
+	StartHour int
+	StartMin  int
+	EndHour   int
+	EndMin    int
 	Memo      string
 	Record    string
 }
 
-func MakeId(date int, start_time int) int {
-	str_id := strconv.Itoa(date) + strconv.Itoa(start_time)
+func MakeId(month int, str_date string, str_start_hour string, str_start_min string) int {
+	str_id := strconv.Itoa(month) + str_date + str_start_hour + str_start_min
 
 	id, err := strconv.Atoi(str_id)
 	if err != nil {
@@ -39,35 +42,53 @@ func mainHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
 
 		// get input
-		str_date := r.FormValue("date") // ex. 20240409
-		day := r.FormValue("day")       // mon, tue, wed, thr, fri
+		str_month := r.FormValue("month") // 05
+		str_date := r.FormValue("date")   // 02
+		day := r.FormValue("day")         // mon, tue, wed, thr, fri
 		event_name := r.FormValue("event")
-		str_start_time := r.FormValue("start_time")
-		str_end_time := r.FormValue("end_time")
+		str_start_hour := r.FormValue("start_hour") // 10
+		str_start_min := r.FormValue("start_min")   // 00
+		str_end_hour := r.FormValue("end_hour")     // 20
+		str_end_min := r.FormValue("end_min")       //00
 		memo := r.FormValue("memo")
 		record := r.FormValue("record")
 
 		// check input type
+		month, err := strconv.Atoi(str_month)
+		if err != nil {
+			fmt.Printf("month must be number\n")
+		}
 		date, err := strconv.Atoi(str_date)
 		if err != nil {
 			fmt.Printf("date must be number\n")
 		}
-		start_time, err := strconv.Atoi(str_start_time)
+		start_hour, err := strconv.Atoi(str_start_hour)
 		if err != nil {
-			fmt.Printf("start_time must be number\n")
+			fmt.Printf("start_hour must be number\n")
 		}
-		end_time, err := strconv.Atoi(str_end_time)
+		start_min, err := strconv.Atoi(str_start_min)
 		if err != nil {
-			fmt.Printf("end_time must be number\n")
+			fmt.Printf("start_min must be number\n")
+		}
+		end_hour, err := strconv.Atoi(str_end_hour)
+		if err != nil {
+			fmt.Printf("end_hour must be number\n")
+		}
+		end_min, err := strconv.Atoi(str_end_min)
+		if err != nil {
+			fmt.Printf("end_min must be number\n")
 		}
 
 		scheduleList = append(scheduleList, &Schedule{
-			Id:        MakeId(date, start_time),
+			Id:        MakeId(month, str_date, str_start_hour, str_start_min),
+			Month:     month,
 			Date:      date,
 			Day:       day,
 			EventName: event_name,
-			StartTime: start_time,
-			EndTime:   end_time,
+			StartHour: start_hour,
+			StartMin:  start_min,
+			EndHour:   end_hour,
+			EndMin:    end_min,
 			Memo:      memo,
 			Record:    record,
 		})

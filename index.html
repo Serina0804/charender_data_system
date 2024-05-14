@@ -10,16 +10,22 @@
 
     <!-- フォーム -->
     <form id="dataForm" action="/" method="post">
+        <label for="month">month: </label>
+        <input type="text" id="month" name="month"><br>
         <label for="date">date: </label>
         <input type="text" id="date" name="date"><br>
         <label for="day">day of the week: </label>
         <input type="text" id="day" name="day"><br>
         <label for="event">event: </label>
         <input type="text" id="event" name="event"><br>
-        <label for="start_time">start time: </label>
-        <input type="text" id="start_time" name="start_time"><br>
-        <label for="end_time">end time: </label>
-        <input type="text" id="end_time" name="end_time"><br>
+        <label for="start_hour">start hour: </label>
+        <input type="text" id="start_hour" name="start_hour"><br>
+        <label for="start_min">start min: </label>
+        <input type="text" id="start_min" name="start_min"><br>
+        <label for="end_hour">end hour: </label>
+        <input type="text" id="end_hour" name="end_hour"><br>
+        <label for="end_min">end min: </label>
+        <input type="text" id="end_min" name="end_min"><br>
         <label for="memo">memo: </label>
         <input type="text" id="memo" name="memo"><br>
         <label for="record">record: </label>
@@ -31,11 +37,14 @@
     <table id="dataTable" border="1">
         <thead>
             <tr>
+                <th>month</th>
                 <th>date</th>
                 <th>day of the week</th>
                 <th>event</th>
-                <th>start time</th>
-                <th>end time</th>
+                <th>start hour</th>
+                <th>start min</th>
+                <th>end hour</th>
+                <th>end min</th>
                 <th>memo</th>
                 <th>record</th>
             </tr>
@@ -43,11 +52,14 @@
         <tbody>
             {{ range . }}
             <tr>
+                <td>{{ .Month }}</td>
                 <td>{{ .Date }}</td>
                 <td>{{ .Day }}</td>
                 <td>{{ .EventName}}</td>
-                <td>{{ .StartTime }}</td>
-                <td>{{ .EndTime }}</td>
+                <td>{{ .StartHour }}</td>
+                <td>{{ .StartMin }}</td>
+                <td>{{ .EndHour }}</td>
+                <td>{{ .EndMin }}</td>
                 <td>{{ .Memo }}</td>
                 <td>{{ .Record }}</td>
             </tr>
