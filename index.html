@@ -2,29 +2,32 @@
 <html>
 
 <head>
-    <title>入力データ</title>
+    <title>Input form</title>
 </head>
 
 <body>
-    <h1>入力データ</h1>
+    <h1>input form</h1>
 
     <!-- フォーム -->
-    <form id="dataForm" action="/" method="post">
-        <label for="date">date：</label>
+    <form id="dataForm" action="accept.html" method="post">
+        <label for="date">date: </label>
         <input type="text" id="date" name="date"><br>
-        <label for="day">day of the week：</label>
+        <label for="day">day of the week: </label>
         <input type="text" id="day" name="day"><br>
-        <label for="event">event：</label>
+        <label for="event">event: </label>
         <input type="text" id="event" name="event"><br>
-        <label for="start_time">start time：</label>
+        <label for="start_time">start time: </label>
         <input type="text" id="start_time" name="start_time"><br>
-        <label for="end_time">end time：</label>
+        <label for="end_time">end time: </label>
         <input type="text" id="end_time" name="end_time"><br>
-        <label for="memo">memo：</label>
+        <label for="memo">memo: </label>
         <input type="text" id="memo" name="memo"><br>
-        <label for="record">record：</label>
+        <label for="record">record: </label>
         <input type="text" id="record" name="record"><br>
-        <button type="submit" onclick="addData()">Add Data</button>
+        <button type="button" onclick="addData()">Add Data</button> <!-- typeをbuttonに変更 -->
+<!--        <button type="button" onclick="addData()">Add Data</button> &lt;!&ndash; typeをbuttonに変更 &ndash;&gt;-->
+<!--        <button type="submit" onclick="addData()">Add Data</button>-->
+<!--        <button type="submit">Add Data</button> &lt;!&ndash; onclick属性は削除 &ndash;&gt;-->
     </form>
 
     <!-- テーブル -->
@@ -46,7 +49,25 @@
     </table>
 
     <script>
+        // function addData() {
+        //     // 入力されたデータを取得
+        //     var formData = new FormData(document.getElementById("dataForm"));
+        //
+        //     // 新しい行を作成してデータを追加
+        //     var newRow = document.createElement("tr");
+        //     formData.forEach(function (value, key) {
+        //         var cell = document.createElement("td");
+        //         cell.textContent = value;
+        //         newRow.appendChild(cell);
+        //     });
+        //
+        //     // テーブルに行を追加
+        //     document.getElementById("dataTable").getElementsByTagName("tbody")[0].appendChild(newRow);
+        //     // 追加された表を表示する
+        //     document.getElementById("dataTable").style.display = "table";
+        // }
         function addData() {
+
             // 入力されたデータを取得
             var formData = new FormData(document.getElementById("dataForm"));
 
@@ -60,7 +81,34 @@
 
             // テーブルに行を追加
             document.getElementById("dataTable").getElementsByTagName("tbody")[0].appendChild(newRow);
+            // 追加された表を表示する
+            document.getElementById("dataTable").style.display = "table";
+
+            // // フォームの送信を行う
+            // document.getElementById("dataForm").submit();
+            // accept.htmlにリダイレクト
+            window.location.href = "accept.html";
         }
+        // document.getElementById("dataForm").addEventListener("submit", function (event) {
+        //     event.preventDefault(); // フォームの送信をキャンセル
+        //
+        //     // 入力されたデータを取得
+        //     var formData = new FormData(document.getElementById("dataForm"));
+        //
+        //     // 新しい行を作成してデータを追加
+        //     var newRow = document.createElement("tr");
+        //     formData.forEach(function (value, key) {
+        //         var cell = document.createElement("td");
+        //         cell.textContent = value;
+        //         newRow.appendChild(cell);
+        //     });
+        //
+        //     // テーブルに行を追加
+        //     document.getElementById("dataTable").getElementsByTagName("tbody")[0].appendChild(newRow);
+        //
+        //     // 追加された表を表示する
+        //     document.getElementById("dataTable").style.display = "table";
+        // });
     </script>
 
 </body>
