@@ -3,15 +3,16 @@ package main
 import (
 	"fmt"
 	"html/template"
-	"math"
 	"net/http"
 	"sort"
+	"strconv"
 
 	"github.com/gorilla/mux"
 )
 
 type ScheduleEntry struct {
-	Day        int
+	Date       int
+	Day        string
 	Event_name string
 	Start_time int
 	End_time   int
@@ -24,15 +25,10 @@ type Schedule struct {
 	Event_data *ScheduleEntry
 }
 
-type ScheduleList struct {
-	Schedule []*Schedule
-}
-
-const start_time_digit = 2
-
 // constructor and initializer of ScheduleEntry
-func NewScheduleEntry(day int, event_name string, start_time int, end_time int, memo string, record string) *ScheduleEntry {
+func NewScheduleEntry(date int, day string, event_name string, start_time int, end_time int, memo string, record string) *ScheduleEntry {
 	s := new(ScheduleEntry)
+	s.Date = date
 	s.Day = day
 	s.Event_name = event_name
 	s.Start_time = start_time
@@ -49,24 +45,61 @@ func NewSchedule(id int, schedule_entry *ScheduleEntry) *Schedule {
 	return s
 }
 
-func MakeId(day int, start_time int) int {
-	id := day*int(math.Pow10(start_time_digit)) + start_time
+func MakeId(str_date string, str_start_time string) int {
+	str_id := str_date + str_start_time
+
+	id, err := strconv.Atoi(str_id)
+	if err != nil {
+		fmt.Printf("cannot make id\n")
+	}
 	return id
 }
+
+var scheduleList []*Schedule
 
 func mainHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("index.html"))
 
 	if r.Method == "POST" {
-		date := r.FormValue("date") // ex. 20240409
-		day := r.FormValue("day")   // mon, tue, wed, thr, fri
+
+		// get input
+		str_date := r.FormValue("date") // ex. 20240409
+		day := r.FormValue("day")       // mon, tue, wed, thr, fri
 		event_name := r.FormValue("event")
-		start_time := r.FormValue("start_time")
-		end_time := r.FormValue("end_time")
+		str_start_time := r.FormValue("start_time")
+		str_end_time := r.FormValue("end_time")
 		memo := r.FormValue("memo")
 		record := r.FormValue("record")
 
-		fmt.Printf("date: %s, day: %s, event_name: %s, start_time: %s, end_time: %s, memo: %s, record: %s\n", date, day, event_name, start_time, end_time, memo, record)
+		// check input type
+		date, err := strconv.Atoi(str_date)
+		if err != nil {
+			fmt.Printf("date must be number\n")
+		}
+		start_time, err := strconv.Atoi(str_start_time)
+		if err != nil {
+			fmt.Printf("start_time must be number\n")
+		}
+		end_time, err := strconv.Atoi(str_end_time)
+		if err != nil {
+			fmt.Printf("end_time must be number\n")
+		}
+
+		// make schedule entry
+		schedule_entry := NewScheduleEntry(date, day, event_name, start_time, end_time, memo, record)
+		schedule := NewSchedule(MakeId(str_date, str_start_time), schedule_entry)
+
+		// append list
+		scheduleList = append(scheduleList, schedule)
+		sort.SliceStable(scheduleList, func(i, j int) bool {
+			return scheduleList[i].Id < scheduleList[j].Id
+		})
+
+		// check sort
+		for i, v := range scheduleList {
+			fmt.Println(i, v)
+			// fmt.Printf("date: %s, day: %s, event_name: %s, start_time: %s, end_time: %s, memo: %s, record: %s\n", str_date, day, event_name, str_start_time, str_end_time, memo, record)
+		}
 	}
 
 	tmpl.Execute(w, nil)
@@ -78,25 +111,4 @@ func main() {
 	http.Handle("/", r)
 	fmt.Println("boot server")
 	http.ListenAndServe(":8080", nil)
-
-	// get usr input
-
-	day := 20240429
-	event_name := "dev"
-	start_time := 1000
-	end_time := 1700
-	memo := "TODO"
-	record := ""
-
-	schedule_entry := NewScheduleEntry(day, event_name, start_time, end_time, memo, record)
-	schedule := NewSchedule(MakeId(day, start_time), schedule_entry)
-	schedule_list := &ScheduleList{}
-
-	scheduleSlice := schedule_list.Schedule
-	scheduleSlice = append(scheduleSlice, schedule)
-
-	// スケジュールをソート
-	sort.SliceStable(scheduleSlice, func(i, j int) bool {
-		return scheduleSlice[i].Id < scheduleSlice[j].Id
-	})
 }
