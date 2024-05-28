@@ -40,8 +40,21 @@
    ※ date - end_time: NULL は受け付けられない．何かしら値を入れないといけない．
 
    ※ memo について
+    - 編集画面の時，登録したい文章をまた 1 から打ち直す感じになる..?
 
-    - 編集画面の時，登録したい文章をまた 1 から打ち直す感じになるのかな..?
+## 動作様子
+- 初回動作時
+[new](https://github.com/Serina0804/charender_data_system/assets/126635893/fadd863c-3809-4f2b-aea0-e0d87df677eb)
+
+- 入力受付前
+[before_adding_entry](https://github.com/Serina0804/charender_data_system/assets/126635893/a0652972-928a-402b-a385-40a4c09b61f4)
+
+- 入力受付後: スケジュールが時系列順に表示される
+[after_adding_entry](https://github.com/Serina0804/charender_data_system/assets/126635893/c6e5e946-c124-4344-ac97-b7d7628907f1)
+
+- エラーメッセージ: 正しくない入力を受け付けた時
+[error_message](https://github.com/Serina0804/charender_data_system/assets/126635893/359770a2-6e86-41f3-926e-371040c6cdc7)
+
 
 ## その他付け足したい機能（時間があれば）
 
