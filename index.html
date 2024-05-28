@@ -8,6 +8,7 @@
             display: inline-block;
             margin-right: 10px;
         }
+
         .time-input {
             width: 30px;
             text-align: center;
@@ -79,7 +80,7 @@
             </tr>
         </thead>
         <tbody>
-            {{ range . }}
+            {{ range .ScheduleList}}
             <tr>
                 <td>{{ .Month }}</td>
                 <td>{{ .Date }}</td>

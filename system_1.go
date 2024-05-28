@@ -11,8 +11,6 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-var scheduleList []Schedule
-
 type Schedule struct {
 	Id        int
 	Month     int
@@ -28,13 +26,10 @@ type Schedule struct {
 }
 
 func MakeTwoDigit(num int) string {
-	return_str := ""
 	if num < 10 {
-		return_str = "0" + strconv.Itoa(num)
-	} else {
-		return_str = strconv.Itoa(num)
+		return "0" + strconv.Itoa(num)
 	}
-	return return_str
+	return strconv.Itoa(num)
 }
 
 func MakeId(month int, date int, start_hour int, start_min int) int {
@@ -56,6 +51,7 @@ func mainHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("index.html"))
 
 	var errorMsgs []string
+	var scheduleList []Schedule
 
 	if r.Method == "POST" {
 
@@ -130,7 +126,6 @@ func mainHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		defer db.Close()
 
-		fmt.Println(start_hour, start_min, end_hour, end_min)
 		_, err = db.Exec(`INSERT INTO schedule (id, month, date, day, eventName, startHour, startMin, endHour, endMin, memo, record) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
 			MakeId(month, date, start_hour, start_min),
 			month,
@@ -157,15 +152,15 @@ func mainHandler(w http.ResponseWriter, r *http.Request) {
 		for rows.Next() {
 			var s Schedule
 			err := rows.Scan(&s.Id, &s.Month, &s.Date, &s.Day, &s.EventName, &s.StartHour, &s.StartMin, &s.EndHour, &s.EndMin, &s.Memo, &s.Record)
-			fmt.Println(s.Id, s.Month, s.Date, s.Day, s.EventName, s.StartHour, s.StartMin, s.EndHour, s.EndMin, s.Memo, s.Record)
 			if err != nil {
 				fmt.Printf("cannot scan row: %s\n", err)
 			}
 			scheduleList = append(scheduleList, s)
 		}
-		for i, v := range scheduleList {
-			fmt.Println(i, v)
-		}
+	}
+
+	for i, v := range scheduleList {
+		fmt.Println(i, v)
 	}
 
 	// Render the template with the schedule list and error messages
