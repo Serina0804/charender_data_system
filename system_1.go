@@ -39,6 +39,8 @@ var scheduleList []Schedule
 func mainHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("index.html"))
 
+	var errorMsgs []string
+
 	if r.Method == "POST" {
 
 		// get input
@@ -56,27 +58,54 @@ func mainHandler(w http.ResponseWriter, r *http.Request) {
 		// check input type
 		month, err := strconv.Atoi(str_month)
 		if err != nil {
-			fmt.Printf("month must be number\n")
+			errorMsgs = append(errorMsgs, "month must be number")
 		}
 		date, err := strconv.Atoi(str_date)
 		if err != nil {
-			fmt.Printf("date must be number\n")
+			errorMsgs = append(errorMsgs, "date must be number")
 		}
-		start_hour, err := strconv.Atoi(str_start_hour)
-		if err != nil {
-			fmt.Printf("start_hour must be number\n")
+		start_hour := 0
+		if str_start_hour != "" {
+			start_hour, err = strconv.Atoi(str_start_hour)
+			if err != nil {
+				errorMsgs = append(errorMsgs, "start hour must be number")
+			}
 		}
-		start_min, err := strconv.Atoi(str_start_min)
-		if err != nil {
-			fmt.Printf("start_min must be number\n")
+		start_min := 0
+		if str_start_min != "" {
+			start_min, err = strconv.Atoi(str_start_min)
+			if err != nil {
+				errorMsgs = append(errorMsgs, "start minute must be number")
+			}
 		}
-		end_hour, err := strconv.Atoi(str_end_hour)
-		if err != nil {
-			fmt.Printf("end_hour must be number\n")
+
+		end_hour := 0
+		if str_end_hour != "" {
+			end_hour, err = strconv.Atoi(str_end_hour)
+			if err != nil {
+				errorMsgs = append(errorMsgs, "end hour must be number")
+			}
 		}
-		end_min, err := strconv.Atoi(str_end_min)
-		if err != nil {
-			fmt.Printf("end_min must be number\n")
+
+		end_min := 0
+		if str_end_min != "" {
+			end_min, err = strconv.Atoi(str_end_min)
+			if err != nil {
+				errorMsgs = append(errorMsgs, "end minute must be number")
+			}
+		}
+
+		// Check if there are any error messages
+		if len(errorMsgs) > 0 {
+			// If there are errors, render the template with the error messages
+			tmpl.Execute(w, struct {
+				ScheduleList []Schedule
+				ErrorMsgs    []string
+			}{
+				ScheduleList: scheduleList,
+				ErrorMsgs:    errorMsgs,
+			})
+			return
 		}
 
 		scheduleList = append(scheduleList, Schedule{
@@ -103,7 +132,14 @@ func mainHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	tmpl.Execute(w, scheduleList)
+	// Render the template with the schedule list and error messages
+	tmpl.Execute(w, struct {
+		ScheduleList []Schedule
+		ErrorMsgs    []string
+	}{
+		ScheduleList: scheduleList,
+		ErrorMsgs:    nil,
+	})
 }
 
 func main() {

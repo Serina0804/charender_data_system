@@ -18,6 +18,16 @@
 <body>
     <h1>input form</h1>
 
+    <!-- エラーメッセージ表示 -->
+    {{ if .ErrorMsgs }}
+    <div style="color: red;">
+        <ul>
+            {{ range .ErrorMsgs }}
+            <li>{{ . }}</li>
+            {{ end }}
+        </ul>
+    </div>
+    {{ end }}
 
     <!-- フォーム -->
     <form id="dataForm" action="/" method="post">
