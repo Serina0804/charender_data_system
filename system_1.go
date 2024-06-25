@@ -66,6 +66,7 @@ func mainHandler(w http.ResponseWriter, r *http.Request) {
 		str_end_min := r.FormValue("end_min")       //00
 		memo := r.FormValue("memo")
 		record := r.FormValue("record")
+		
 
 		// check input type
 		month, err := strconv.Atoi(str_month)
