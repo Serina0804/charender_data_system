@@ -173,6 +173,146 @@ func mainHandler(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+func searchHandler(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("index.html"))
+
+	var errorMsgs []string
+	var scheduleList []Schedule
+
+	if r.Method == "POST" {
+
+		// get input
+		str_month := r.FormValue("month") // 05
+		str_date := r.FormValue("date")   // 02
+		day := r.FormValue("day")         // mon, tue, wed, thr, fri
+		event_name := r.FormValue("event")
+		str_start_hour := r.FormValue("start_hour") // 10
+		str_start_min := r.FormValue("start_min")   // 00
+		str_end_hour := r.FormValue("end_hour")     // 20
+		str_end_min := r.FormValue("end_min")       //00
+		memo := r.FormValue("memo")
+		record := r.FormValue("record")
+
+		query := "SELECT * FROM schedule WHERE 1=1"
+		var args []interface{}
+
+		if str_month != "" {
+			month, err := strconv.Atoi(str_month)
+			if err != nil {
+				errorMsgs = append(errorMsgs, "month must be number")
+			}
+			query += " AND month = ?"
+			args = append(args, month)
+		}
+		if str_date != "" {
+			date, err := strconv.Atoi(str_date)
+			if err != nil {
+				errorMsgs = append(errorMsgs, "date must be number")
+			}
+			query += " AND date = ?"
+			args = append(args, date)
+		}
+		if day != "" {
+			query += " AND day = ?"
+			args = append(args, day)
+		}
+		if event_name != "" {
+			query += " AND event_name = ?"
+			args = append(args, event_name)
+		}
+		if str_start_hour != "" {
+			start_hour, err := strconv.Atoi(str_start_hour)
+			if err != nil {
+				errorMsgs = append(errorMsgs, "start_hour must be number")
+			}
+			query += " AND start_hour = ?"
+			args = append(args, start_hour)
+		}
+		if str_start_min != "" {
+			start_min, err := strconv.Atoi(str_start_min)
+			if err != nil {
+				errorMsgs = append(errorMsgs, "start_min must be number")
+			}
+			query += " AND start_min = ?"
+			args = append(args, start_min)
+		}
+		if str_end_hour != "" {
+			end_hour, err := strconv.Atoi(str_end_hour)
+			if err != nil {
+				errorMsgs = append(errorMsgs, "end_hour must be number")
+			}
+			query += " AND end_hour = ?"
+			args = append(args, end_hour)
+		}
+		if str_end_min != "" {
+			end_min, err := strconv.Atoi(str_end_min)
+			if err != nil {
+				errorMsgs = append(errorMsgs, "end_min must be number")
+			}
+			query += " AND end_min = ?"
+			args = append(args, end_min)
+		}
+		if memo != "" {
+			query += " AND memo = ?"
+			args = append(args, memo)
+		}
+		if record != "" {
+			query += " AND record = ?"
+			args = append(args, record)
+		}
+
+		// TODO: add other element
+
+		// Check if there are any error messages
+		if len(errorMsgs) > 0 {
+			// If there are errors, render the template with the error messages
+			tmpl.Execute(w, struct {
+				ScheduleList []Schedule
+				ErrorMsgs    []string
+			}{
+				ScheduleList: scheduleList,
+				ErrorMsgs:    errorMsgs,
+			})
+			return
+		}
+
+		db, err := sql.Open("sqlite3", "database.db")
+		if err != nil {
+			fmt.Printf("cannot open database: %s\n", err)
+		}
+		defer db.Close()
+
+		rows, err := db.Query(query, args...)
+		if err != nil {
+			fmt.Printf("cannot query database: %s\n", err)
+		}
+		defer rows.Close()
+
+		scheduleList = []Schedule{}
+		for rows.Next() {
+			var s Schedule
+			err := rows.Scan(&s.Id, &s.Month, &s.Date, &s.Day, &s.EventName, &s.StartHour, &s.StartMin, &s.EndHour, &s.EndMin, &s.Memo, &s.Record)
+			if err != nil {
+				fmt.Printf("cannot scan row: %s\n", err)
+			}
+			scheduleList = append(scheduleList, s)
+		}
+	}
+
+	for i, v := range scheduleList {
+		fmt.Println(i, v)
+	}
+
+	// Render the template with the schedule list and error messages
+	tmpl.Execute(w, struct {
+		ScheduleList []Schedule
+		ErrorMsgs    []string
+	}{
+		ScheduleList: scheduleList,
+		ErrorMsgs:    nil,
+	})
+}
+
 func initializeDatabase() error {
 	db, err := sql.Open("sqlite3", "database.db")
 
