@@ -59,8 +59,16 @@
         <input type="text" id="memo" name="memo"><br>
         <label for="record">record: </label>
         <input type="text" id="record" name="record"><br>
-        <button type="submit">Add Data</button>
+        <!-- <label for="method">Add or Search: </label>
+        <input type="text" id="event" name="event"><br> -->
+        <legend>Pease select Add or Search.</legend>
+        <input type="radio" id="add" name="add" value="add" />
+        <label for="add">Add</label>
+        <input type="radio" id="search" name="search" value="search" />
+        <label for="search">Search</label>
+        <button type="submit">Execute</button>
     </form>
+
 
     <!-- テーブル -->
     <table id="dataTable" border="1">
