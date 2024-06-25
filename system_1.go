@@ -261,8 +261,6 @@ func searchHandler(w http.ResponseWriter, r *http.Request) {
 			args = append(args, record)
 		}
 
-		// TODO: add other element
-
 		// Check if there are any error messages
 		if len(errorMsgs) > 0 {
 			// If there are errors, render the template with the error messages
@@ -282,6 +280,7 @@ func searchHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		defer db.Close()
 
+		// TODO: order elements
 		rows, err := db.Query(query, args...)
 		if err != nil {
 			fmt.Printf("cannot query database: %s\n", err)
