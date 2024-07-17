@@ -50,7 +50,8 @@
 [before_adding_entry](https://github.com/user-attachments/assets/e14d23b0-e00b-4ff6-9f04-2cc5c21a4351)
 
 - 入力受付後: スケジュールが時系列順に表示される
-[after_adding_entry](https://github.com/Serina0804/charender_data_system/assets/126635893/c6e5e946-c124-4344-ac97-b7d7628907f1)
+[after_adding_entry](https://github.com/user-attachments/assets/55382cc4-4ef3-41c8-8bc0-b568e1ddc942)
+
 
 - エラーメッセージ: 正しくない入力を受け付けた時
 [error_message](https://github.com/Serina0804/charender_data_system/assets/126635893/359770a2-6e86-41f3-926e-371040c6cdc7)
