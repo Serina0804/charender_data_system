@@ -55,7 +55,11 @@
 - 複数のスケジュール入力後: スケジュールが時系列順に表示される
 [after_adding_entry_sort](https://github.com/user-attachments/assets/cc2df34a-abae-4e15-bb33-0afac5fd64b6)
 
-- スケジュールの検索時
+- スケジュールの検索時：検索したい日付を記入　→　Searchにチェック　→　Executeボタンを押す
+[search_schedule](https://github.com/user-attachments/assets/1b6b7cd8-7537-4016-8747-7a176bf746a6)
+
+- スケジュールの検索後：検索した日付のスケジュールが表示される
+[after_search_schedule](https://github.com/user-attachments/assets/89640842-71a3-4cf7-b850-a018a7393b72)
 
 - エラーメッセージ: 正しくない入力を受け付けた時
 [error_message](https://github.com/Serina0804/charender_data_system/assets/126635893/359770a2-6e86-41f3-926e-371040c6cdc7)
