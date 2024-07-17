@@ -43,10 +43,10 @@
     - 編集画面の時，登録したい文章をまた 1 から打ち直す感じになる..?
 
 ## 動作様子
-# 初回動作時
+### 初回動作時
 [new](https://github.com/user-attachments/assets/354909f8-0ec5-405e-b702-11193595affd)
 
-# スケジュール入力
+### スケジュール入力
 - 入力操作：追加したいスケジュールを記入　→　Addにチェック　→　Executeボタンを押す
 
 - 入力時の画面：
@@ -58,7 +58,7 @@
 - 複数のスケジュール入力後: スケジュールが時系列順に表示される
 [after_adding_entry_sort](https://github.com/user-attachments/assets/cc2df34a-abae-4e15-bb33-0afac5fd64b6)
 
-# スケジュール検索
+### スケジュール検索
 - 検索操作：検索したい日付を記入　→　Searchにチェック　→　Executeボタンを押す
 
 - 検索時の画面：
