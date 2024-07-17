@@ -50,7 +50,7 @@
 [before_adding_entry](https://github.com/user-attachments/assets/e14d23b0-e00b-4ff6-9f04-2cc5c21a4351)
 
 - 入力受付後: スケジュールが時系列順に表示される
-[after_adding_entry](https://github.com/user-attachments/assets/55382cc4-4ef3-41c8-8bc0-b568e1ddc942)
+[after_adding_entry](https://github.com/user-attachments/assets/cc2df34a-abae-4e15-bb33-0afac5fd64b6)
 
 
 - エラーメッセージ: 正しくない入力を受け付けた時
