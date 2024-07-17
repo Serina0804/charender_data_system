@@ -70,9 +70,3 @@
 <!-- - エラーメッセージ: 正しくない入力を受け付けた時
 [error_message](https://github.com/Serina0804/charender_data_system/assets/126635893/359770a2-6e86-41f3-926e-371040c6cdc7) -->
 
-
-## その他付け足したい機能（時間があれば）
-
-- hash tag
-- 検索機能
-- hash tag 毎のページ
