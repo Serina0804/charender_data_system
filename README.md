@@ -44,7 +44,7 @@
 
 ## 動作様子
 ### 初回動作時
-[new](https://github.com/user-attachments/assets/354909f8-0ec5-405e-b702-11193595affd)
+- 起動時の画面：[new](https://github.com/user-attachments/assets/354909f8-0ec5-405e-b702-11193595affd)
 
 ### スケジュール入力
 - 入力操作：追加したいスケジュールを記入　→　Addにチェック　→　Executeボタンを押す
