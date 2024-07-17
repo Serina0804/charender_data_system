@@ -46,11 +46,14 @@
 - 初回動作時
 [new](https://github.com/Serina0804/charender_data_system/assets/126635893/fadd863c-3809-4f2b-aea0-e0d87df677eb)
 
-- 入力受付前：追加したいスケジュール
+- スケジュール入力時：追加したいスケジュールを記入　→　Addにチェック　→　Executeボタンを押す
 [before_adding_entry](https://github.com/user-attachments/assets/e14d23b0-e00b-4ff6-9f04-2cc5c21a4351)
 
-- 入力受付後: スケジュールが時系列順に表示される
-[after_adding_entry](https://github.com/user-attachments/assets/cc2df34a-abae-4e15-bb33-0afac5fd64b6)
+- スケジュール入力後: スケジュールが表示される
+[after_adding_entry](https://github.com/user-attachments/assets/59623cb5-325a-43f7-9656-3420a43e4beb)
+
+- 複数のスケジュール入力後: スケジュールが時系列順に表示される
+[after_adding_entry_sort](https://github.com/user-attachments/assets/cc2df34a-abae-4e15-bb33-0afac5fd64b6)
 
 - スケジュールの検索時
 
