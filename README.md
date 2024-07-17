@@ -47,7 +47,7 @@
 [new](https://github.com/Serina0804/charender_data_system/assets/126635893/fadd863c-3809-4f2b-aea0-e0d87df677eb)
 
 - 入力受付前
-[before_adding_entry](https://github.com/Serina0804/charender_data_system/assets/126635893/a0652972-928a-402b-a385-40a4c09b61f4)
+[before_adding_entry](https://github.com/user-attachments/assets/e14d23b0-e00b-4ff6-9f04-2cc5c21a4351)
 
 - 入力受付後: スケジュールが時系列順に表示される
 [after_adding_entry](https://github.com/Serina0804/charender_data_system/assets/126635893/c6e5e946-c124-4344-ac97-b7d7628907f1)
